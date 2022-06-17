@@ -1,9 +1,11 @@
 #!/bin/sh
 
-DOCKER_TAG=pythonstock/pythonstock:latest
+DOCKER_TAG=pythonstock/pythonstock:2206
 
-sudo rm -rf data
-sudo rm -f jobs/nohup.out
+# sudo rm -rf data
+# sudo rm -f jobs/nohup.out
+rm -rf data
+rm -f jobs/nohup.out
 
 echo " docker build -f Dockerfile -t ${DOCKER_TAG} ."
 docker build -f Dockerfile -t ${DOCKER_TAG} .

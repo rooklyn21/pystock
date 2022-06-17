@@ -44,29 +44,29 @@ services:
             - "default"
         restart: always
 
-    # stock1:
-    #     # image: pythonstock/pythonstock:latest
-    #     image: pythonstock/pythonstock:1.00
-    #     container_name: stock1
-    #     ports:
-    #         - "8881:8881"
-    #         - "9991:9991"
-    #     volumes:
-    #         - "./data/notebooks:/data/notebooks"
-    #         - "./data/logs:/data/logs"
-    #     environment:
-    #         MYSQL_HOST: mariadb
-    #         MYSQL_USER: root
-    #         MYSQL_PWD: mariadb
-    #         MYSQL_DB: stock_data
-    #         LANG: zh_CN.UTF-8
-    #         LC_CTYPE: zh_CN.UTF-8
-    #         PYTHONIOENCODING: utf-8
-    #     # links:
-    #     #     - mariadb
-    #     networks:
-    #         - "default"
-    #     restart: always
+    stock1:
+        # image: pythonstock/pythonstock:latest
+        image: pythonstock/pythonstock:2206
+        container_name: stock1
+        ports:
+            - "8881:8881"
+            - "9991:9991"
+        volumes:
+            - "./data/notebooks:/data/notebooks"
+            - "./data/logs:/data/logs"
+        environment:
+            MYSQL_HOST: mariadb
+            MYSQL_USER: root
+            MYSQL_PWD: mariadb
+            MYSQL_DB: stock_data
+            LANG: zh_CN.UTF-8
+            LC_CTYPE: zh_CN.UTF-8
+            PYTHONIOENCODING: utf-8
+        # links:
+        #     - mariadb
+        networks:
+            - "default"
+        restart: always
     
     # mysqldb:
     #     image: mysql:5.7
