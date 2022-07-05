@@ -1,16 +1,12 @@
-#!/bin/sh
+#!/bin/bash
 
-DOCKER_TAG=pythonstock/pythonstock:2206
+NOW_MONTH=$(date "+%Y-%m")
 
-# sudo rm -rf data
-# sudo rm -f jobs/nohup.out
-rm -rf data
-rm -f jobs/nohup.out
+DOCKER_TAG=pythonstock/pythonstock:base-${NOW_MONTH}
 
 echo " docker build -f Dockerfile -t ${DOCKER_TAG} ."
 docker build -f Dockerfile -t ${DOCKER_TAG} .
 echo "#################################################################"
 echo " docker push ${DOCKER_TAG} "
 
-mkdir data
 

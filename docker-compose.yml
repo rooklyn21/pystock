@@ -2,6 +2,7 @@ version: "3"
 services:
     stock:
         image: pythonstock/pythonstock:latest
+        # image: pythonstock/pythonstock:1.00
         container_name: stock
         ports:
             - "8888:8888"
@@ -10,25 +11,28 @@ services:
             - "./data/notebooks:/data/notebooks"
             - "./data/logs:/data/logs"
         environment:
-            MYSQL_HOST: mysqldb
+            MYSQL_HOST: mariadb
             MYSQL_USER: root
-            MYSQL_PWD: mysqldb
+            MYSQL_PWD: mariadb
             MYSQL_DB: stock_data
             LANG: zh_CN.UTF-8
             LC_CTYPE: zh_CN.UTF-8
             PYTHONIOENCODING: utf-8
         links:
-            - mysqldb:mysqldb
+            - mariadb
+        networks:
+            - "default"
         restart: always
-    mysqldb:
-        image: mysql:5.7
-        container_name: mysqldb
+
+    mariadb:
+        image: mariadb:latest
+        container_name: mariadb
         ports:
             - "3306:3306"
         volumes:
-            - "./data/mysqldb/data:/var/lib/mysql"
+            - "./data/mariadb/data:/var/lib/mysql"
         environment:
-            MYSQL_ROOT_PASSWORD: mysqldb
+            MYSQL_ROOT_PASSWORD: mariadb
             MYSQL_DATABASE: stock_data
             TZ: Asia/Shanghai
         command: [
@@ -36,5 +40,51 @@ services:
             '--collation-server=utf8mb4_general_ci',
             '--max_connections=3000'
         ]
+        networks:
+            - "default"
         restart: always
+
+    stock1:
+        # image: pythonstock/pythonstock:latest
+        image: pythonstock/pythonstock:2206
+        container_name: stock1
+        ports:
+            - "8881:8881"
+            - "9991:9991"
+        volumes:
+            - "./data/notebooks:/data/notebooks"
+            - "./data/logs:/data/logs"
+        environment:
+            MYSQL_HOST: mariadb
+            MYSQL_USER: root
+            MYSQL_PWD: mariadb
+            MYSQL_DB: stock_data
+            LANG: zh_CN.UTF-8
+            LC_CTYPE: zh_CN.UTF-8
+            PYTHONIOENCODING: utf-8
+        # links:
+        #     - mariadb
+        networks:
+            - "default"
+        restart: always
+    
+    # mysqldb:
+    #     image: mysql:5.7
+    #     container_name: mysqldb
+    #     ports:
+    #         - "3306:3306"
+    #     volumes:
+    #         - "./data/mysqldb/data:/var/lib/mysql"
+    #     environment:
+    #         MYSQL_ROOT_PASSWORD: mysqldb
+    #         MYSQL_DATABASE: stock_data
+    #         TZ: Asia/Shanghai
+    #     command: [
+    #         '--character-set-server=utf8mb4',
+    #         '--collation-server=utf8mb4_general_ci',
+    #         '--max_connections=3000'
+    #     ]
+    #     restart: always
         
+networks:
+    default:
